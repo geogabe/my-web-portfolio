@@ -319,17 +319,17 @@ main {
 
 .year-track {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(13, 1fr);
   position: relative;
-  min-width: 480px;
+  min-width: 600px;
 }
 
 .year-track::before {
   content: '';
   position: absolute;
   top: 3px;
-  left: calc(100% / 18);
-  right: calc(100% / 18);
+  left: calc(100% / 26);
+  right: calc(100% / 26);
   height: 1px;
   background: var(--border);
 }
