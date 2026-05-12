@@ -550,6 +550,107 @@ footer {
   grid-column: span 2;
 }
 
+/* ============================
+   CASE STUDY TEMPLATE SECTIONS
+   ============================ */
+
+/* KPI strip inside case study */
+.cs-kpis {
+  margin-bottom: 80px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 0;
+}
+
+/* Challenge / Process / Outcome columns */
+.cs-overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-bottom: 96px;
+  padding-bottom: 80px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cs-col h3 {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.cs-col p {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+/* Numbered sections (Before / Process / Final) */
+.cs-section {
+  margin-bottom: 96px;
+}
+
+.cs-section-header {
+  margin-bottom: 40px;
+}
+
+.cs-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.cs-section-header h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 36px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.cs-section-header p {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.75;
+  max-width: 680px;
+}
+
+/* ============================
+   RELATED WORK
+   ============================ */
+.related-work {
+  border-top: 1px solid var(--border);
+  padding-top: 56px;
+  margin-top: 80px;
+}
+
+.related-work .cs-label {
+  margin-bottom: 28px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.related-grid .thumb {
+  display: block;
+  text-decoration: none;
+}
+
 /* PDF embed */
 .pdf-container {
   margin-top: 48px;
