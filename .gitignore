@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code
+.vscode/
+
+# Claude
+.claude/
+
+# Node (if you ever add a build step)
+node_modules/
