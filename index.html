@@ -73,11 +73,25 @@
         <button class="filter-btn" data-filter="ecosystem">Ecosystem</button>
     </div>
 
+    <div class="year-filter">
+        <div class="year-track">
+            <button type="button" class="year-tick" data-year="2015"><div class="year-dot"></div><span class="year-label">2015</span></button>
+            <button type="button" class="year-tick" data-year="2016"><div class="year-dot"></div><span class="year-label">2016</span></button>
+            <button type="button" class="year-tick" data-year="2017"><div class="year-dot"></div><span class="year-label">2017</span></button>
+            <button type="button" class="year-tick" data-year="2018"><div class="year-dot"></div><span class="year-label">2018</span></button>
+            <button type="button" class="year-tick" data-year="2019"><div class="year-dot"></div><span class="year-label">2019</span></button>
+            <button type="button" class="year-tick" data-year="2020"><div class="year-dot"></div><span class="year-label">2020</span></button>
+            <button type="button" class="year-tick" data-year="2021"><div class="year-dot"></div><span class="year-label">2021</span></button>
+            <button type="button" class="year-tick" data-year="2022"><div class="year-dot"></div><span class="year-label">2022</span></button>
+            <button type="button" class="year-tick" data-year="2023"><div class="year-dot"></div><span class="year-label">2023</span></button>
+        </div>
+    </div>
+
     <main>
         <div class="grid" id="masonry-grid">
             <div class="grid-sizer"></div>
 
-            <div class="thumb grid-item" data-tags="logistics,poc">
+            <div class="thumb grid-item" data-tags="logistics,poc" data-year="2020">
                 <img src="images/thumbs/oilgas.png" alt="Oil &amp; Gas thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Logistics</p>
@@ -86,7 +100,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" data-tags="it-support,product">
+            <div class="thumb grid-item" data-tags="it-support,product" data-year="2021">
                 <img src="images/thumbs/appex.png" alt="Application Experience thumbnail">
                 <div class="overlay">
                     <p class="text-h1">IT Support</p>
@@ -95,7 +109,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" data-tags="finops,analytics,poc">
+            <div class="thumb grid-item" data-tags="finops,analytics,poc" data-year="2016">
                 <img src="images/thumbs/dewa.png" alt="DEWA thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Decision Tool</p>
@@ -104,7 +118,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" id="mobile" data-tags="it-support,product">
+            <div class="thumb grid-item" id="mobile" data-tags="it-support,product" data-year="2023">
                 <img src="images/thumbs/mobile.png" alt="Amplify Mobile thumbnail">
                 <div class="overlay">
                     <p class="text-h1">IT Support</p>
@@ -113,7 +127,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" data-tags="it-security,vision">
+            <div class="thumb grid-item" data-tags="it-security,vision" data-year="2017">
                 <img src="images/thumbs/evr.png" alt="EVR thumbnail">
                 <div class="overlay">
                     <p class="text-h1">IT Security</p>
@@ -122,7 +136,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" data-tags="trading,finops,product">
+            <div class="thumb grid-item" data-tags="trading,finops,product" data-year="2018">
                 <img src="images/thumbs/quo.png" alt="QUO thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Trading</p>
@@ -131,7 +145,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" data-tags="project-management,product">
+            <div class="thumb grid-item" data-tags="project-management,product" data-year="2015">
                 <img src="images/thumbs/mudano.png" alt="Sharktower thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Delivery Management</p>
@@ -140,7 +154,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" data-tags="analytics,ecosystem">
+            <div class="thumb grid-item" data-tags="analytics,ecosystem" data-year="2016">
                 <img src="images/thumbs/datadna.png" alt="DataDNA thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Analytics Platform</p>
@@ -149,7 +163,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" data-tags="it-support,product">
+            <div class="thumb grid-item" data-tags="it-support,product" data-year="2022">
                 <img src="images/thumbs/ampli.png" alt="Amplify thumbnail">
                 <div class="overlay">
                     <p class="text-h1">IT Support</p>
@@ -158,7 +172,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" data-tags="analytics,product">
+            <div class="thumb grid-item" data-tags="analytics,product" data-year="2019">
                 <img src="images/thumbs/vantage.png" alt="Vantage thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Data Analytics</p>
@@ -167,7 +181,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" data-tags="it-support,product">
+            <div class="thumb grid-item" data-tags="it-support,product" data-year="2022">
                 <img src="images/thumbs/timeline.png" alt="Support View thumbnail">
                 <div class="overlay">
                     <p class="text-h1">IT Support</p>
@@ -213,23 +227,23 @@
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll(); // run once on load
 
-        // ── Industry filter (multi-select) ──────────────────────────────
+        // ── Filters (industry/type multi-select + year timeline) ────────
         var activeFilters = new Set();
-        var filterBtns = document.querySelectorAll('.filter-btn');
-        var gridItems  = document.querySelectorAll('.thumb.grid-item');
+        var activeYears   = new Set();
+        var filterBtns    = document.querySelectorAll('.filter-btn');
+        var yearTicks     = document.querySelectorAll('.year-tick');
+        var gridItems     = document.querySelectorAll('.thumb.grid-item');
 
-        function applyFilter() {
+        function applyFilters() {
             gridItems.forEach(function(item) {
-                if (activeFilters.size === 0) {
-                    // "All" mode — show everything
-                    item.classList.remove('hidden');
-                } else {
-                    var tags = (item.dataset.tags || '').split(',').map(function(t) { return t.trim(); });
-                    var match = tags.some(function(t) { return activeFilters.has(t); });
-                    item.classList.toggle('hidden', !match);
-                }
+                var tags = (item.dataset.tags || '').split(',').map(function(t) { return t.trim(); });
+                var year = (item.dataset.year || '').trim();
+
+                var tagMatch  = activeFilters.size === 0 || tags.some(function(t) { return activeFilters.has(t); });
+                var yearMatch = activeYears.size  === 0 || activeYears.has(year);
+
+                item.classList.toggle('hidden', !(tagMatch && yearMatch));
             });
-            // Wait one frame so display:none reflow settles before relayout
             requestAnimationFrame(function() { msnry.layout(); });
         }
 
@@ -238,18 +252,15 @@
                 var filter = btn.dataset.filter;
 
                 if (filter === 'all') {
-                    // Clear everything → show all
                     activeFilters.clear();
                     filterBtns.forEach(function(b) { b.classList.remove('active'); });
                     btn.classList.add('active');
                 } else {
-                    // Deactivate "All" button
                     document.querySelector('[data-filter="all"]').classList.remove('active');
 
                     if (activeFilters.has(filter)) {
                         activeFilters.delete(filter);
                         btn.classList.remove('active');
-                        // If nothing selected → revert to All
                         if (activeFilters.size === 0) {
                             document.querySelector('[data-filter="all"]').classList.add('active');
                         }
@@ -259,7 +270,21 @@
                     }
                 }
 
-                applyFilter();
+                applyFilters();
+            });
+        });
+
+        yearTicks.forEach(function(tick) {
+            tick.addEventListener('click', function() {
+                var year = tick.dataset.year;
+                if (activeYears.has(year)) {
+                    activeYears.delete(year);
+                    tick.classList.remove('active');
+                } else {
+                    activeYears.add(year);
+                    tick.classList.add('active');
+                }
+                applyFilters();
             });
         });
     </script>

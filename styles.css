@@ -309,6 +309,84 @@ main {
   border-color: var(--accent);
 }
 
+/* ============================
+   YEAR TIMELINE FILTER
+   ============================ */
+.year-filter {
+  padding: 20px var(--gutter) 28px;
+  overflow-x: auto;
+}
+
+.year-track {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  position: relative;
+  min-width: 480px;
+}
+
+.year-track::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: calc(100% / 18);
+  right: calc(100% / 18);
+  height: 1px;
+  background: var(--border);
+}
+
+.year-tick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.year-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+  transition: background var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              transform var(--dur) var(--ease);
+}
+
+.year-label {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--dur) var(--ease);
+}
+
+.year-tick:hover .year-dot {
+  background: var(--text);
+  border-color: var(--text);
+}
+
+.year-tick:hover .year-label {
+  color: var(--text);
+}
+
+.year-tick.active .year-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.6);
+}
+
+.year-tick.active .year-label {
+  color: var(--accent);
+}
+
 /* Hidden grid item (filtered out) */
 .grid-item.hidden {
   display: none;
