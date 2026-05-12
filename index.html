@@ -30,7 +30,7 @@
                     <h3>Product + Design + Data</h3>
                 </div>
             </div>
-            <p class="body-content">With over <span>19 years of experience</span>, our studio has a proven track record in driving innovative design strategies and leading cross-functional teams. Our expertise spans UX/UI design, product development, and data visualization, making us ideally suited to <span>lead the design efforts of a dynamic startup.</span></p>
+            <p class="body-content">With over <span>21 years of experience</span>, our studio has a proven track record in driving innovative design strategies and leading cross-functional teams. Our expertise spans UX/UI design, product development, and data visualization, making us ideally suited to <span>lead the design efforts of a dynamic startup.</span></p>
             <ul class="stats">
                 <li><span class="fact">21+</span>Years of experience</li>
                 <li><span class="fact">6</span>Start-up environments</li>
@@ -57,14 +57,23 @@
         </section>
     </header>
 
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="it-support">IT Support</button>
+        <button class="filter-btn" data-filter="it-security">IT Security</button>
+        <button class="filter-btn" data-filter="analytics">Analytics</button>
+        <button class="filter-btn" data-filter="trading">Trading</button>
+        <button class="filter-btn" data-filter="finops">Finops</button>
+        <button class="filter-btn" data-filter="logistics">Logistics</button>
+        <button class="filter-btn" data-filter="project-management">Project Mgmt</button>
+    </div>
+
     <main>
         <div class="grid" id="masonry-grid">
             <div class="grid-sizer"></div>
 
-            <div class="thumb grid-item">
-                <video autoplay loop muted playsinline>
-                    <source src="images/thumbs/videos/Supply-Chain-demo_V3-low.mp4" type="video/mp4" />
-                </video>
+            <div class="thumb grid-item" data-tags="logistics">
+                <img src="images/thumbs/oilgas.png" alt="Oil &amp; Gas thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Logistics</p>
                     <p class="text-p">Oil &amp; Gas / Transportation Proof of Concept</p>
@@ -72,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item">
+            <div class="thumb grid-item" data-tags="it-support">
                 <img src="images/thumbs/appex.png" alt="Application Experience thumbnail">
                 <div class="overlay">
                     <p class="text-h1">IT Support</p>
@@ -81,7 +90,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item">
+            <div class="thumb grid-item" data-tags="finops,analytics">
                 <img src="images/thumbs/dewa.png" alt="DEWA thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Decision Tool</p>
@@ -90,10 +99,8 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" id="mobile">
-                <video autoplay loop muted playsinline>
-                    <source src="images/thumbs/videos/Amplify-mobile.mp4" type="video/mp4" />
-                </video>
+            <div class="thumb grid-item" id="mobile" data-tags="it-support">
+                <img src="images/thumbs/mobile.png" alt="Amplify Mobile thumbnail">
                 <div class="overlay">
                     <p class="text-h1">IT Support</p>
                     <p class="text-p">Nexthink Amplify — Mobile App</p>
@@ -101,10 +108,8 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item">
-                <video autoplay loop muted playsinline>
-                    <source src="images/thumbs/videos/Evr-started.mp4" type="video/mp4" />
-                </video>
+            <div class="thumb grid-item" data-tags="it-security">
+                <img src="images/thumbs/evr.png" alt="EVR thumbnail">
                 <div class="overlay">
                     <p class="text-h1">IT Security</p>
                     <p class="text-p">EVR — IT Security Vision</p>
@@ -112,10 +117,8 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item">
-                <video autoplay loop muted playsinline>
-                    <source src="images/thumbs/videos/quo-video.mp4" type="video/mp4" />
-                </video>
+            <div class="thumb grid-item" data-tags="trading,finops">
+                <img src="images/thumbs/quo.png" alt="QUO thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Trading</p>
                     <p class="text-p">QUO — Wealth Management Technology</p>
@@ -123,7 +126,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item">
+            <div class="thumb grid-item" data-tags="project-management">
                 <img src="images/thumbs/mudano.png" alt="Sharktower thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Delivery Management</p>
@@ -132,7 +135,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item">
+            <div class="thumb grid-item" data-tags="analytics">
                 <img src="images/thumbs/datadna.png" alt="DataDNA thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Analytics Platform</p>
@@ -141,7 +144,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item">
+            <div class="thumb grid-item" data-tags="it-support">
                 <img src="images/thumbs/ampli.png" alt="Amplify thumbnail">
                 <div class="overlay">
                     <p class="text-h1">IT Support</p>
@@ -150,7 +153,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item">
+            <div class="thumb grid-item" data-tags="analytics">
                 <img src="images/thumbs/vantage.png" alt="Vantage thumbnail">
                 <div class="overlay">
                     <p class="text-h1">Data Analytics</p>
@@ -159,7 +162,7 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item">
+            <div class="thumb grid-item" data-tags="it-support">
                 <img src="images/thumbs/timeline.png" alt="Support View thumbnail">
                 <div class="overlay">
                     <p class="text-h1">IT Support</p>
@@ -204,6 +207,56 @@
 
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll(); // run once on load
+
+        // ── Industry filter (multi-select) ──────────────────────────────
+        var activeFilters = new Set();
+        var filterBtns = document.querySelectorAll('.filter-btn');
+        var gridItems  = document.querySelectorAll('.thumb.grid-item');
+
+        function applyFilter() {
+            gridItems.forEach(function(item) {
+                if (activeFilters.size === 0) {
+                    // "All" mode — show everything
+                    item.classList.remove('hidden');
+                } else {
+                    var tags = (item.dataset.tags || '').split(',').map(function(t) { return t.trim(); });
+                    var match = tags.some(function(t) { return activeFilters.has(t); });
+                    item.classList.toggle('hidden', !match);
+                }
+            });
+            // Wait one frame so display:none reflow settles before relayout
+            requestAnimationFrame(function() { msnry.layout(); });
+        }
+
+        filterBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var filter = btn.dataset.filter;
+
+                if (filter === 'all') {
+                    // Clear everything → show all
+                    activeFilters.clear();
+                    filterBtns.forEach(function(b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+                } else {
+                    // Deactivate "All" button
+                    document.querySelector('[data-filter="all"]').classList.remove('active');
+
+                    if (activeFilters.has(filter)) {
+                        activeFilters.delete(filter);
+                        btn.classList.remove('active');
+                        // If nothing selected → revert to All
+                        if (activeFilters.size === 0) {
+                            document.querySelector('[data-filter="all"]').classList.add('active');
+                        }
+                    } else {
+                        activeFilters.add(filter);
+                        btn.classList.add('active');
+                    }
+                }
+
+                applyFilter();
+            });
+        });
     </script>
 </body>
 </html>
