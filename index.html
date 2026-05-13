@@ -440,6 +440,15 @@
         document.addEventListener('touchmove',   function(e) { if (isDragging) { dragMove(e.touches[0].clientX); e.preventDefault(); } }, { passive: false });
         document.addEventListener('touchend',    dragEnd);
 
+        // Make entire tile clickable
+        gridItems.forEach(function(item) {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', function() {
+                var link = item.querySelector('.link-a');
+                if (link) window.location.href = link.href;
+            });
+        });
+
         // Initial counts
         updateCounts();
     </script>
