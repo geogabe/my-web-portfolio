@@ -258,7 +258,7 @@ main {
 }
 
 .grid-item {
-  padding: 6px;
+  padding: 1px;
 }
 
 /* ============================
@@ -387,6 +387,36 @@ main {
   color: var(--accent);
 }
 
+.year-tick.in-range .year-dot {
+  background: rgba(159, 201, 207, 0.35);
+  border-color: var(--accent);
+}
+
+.year-tick.in-range .year-label {
+  color: rgba(159, 201, 207, 0.7);
+}
+
+.year-range-highlight {
+  display: none;
+  position: absolute;
+  top: 0;
+  height: 7px;
+  background: rgba(159, 201, 207, 0.18);
+  border-radius: 4px;
+  pointer-events: none;
+  transition: left 0.15s var(--ease), right 0.15s var(--ease);
+  z-index: 0;
+}
+
+.filter-btn .count {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 9px;
+  font-weight: 400;
+  opacity: 0.5;
+  letter-spacing: 0;
+}
+
 /* Hidden grid item (filtered out) */
 .grid-item.hidden {
   display: none;
@@ -431,12 +461,34 @@ main {
   flex-direction: column;
   justify-content: flex-end;
   padding: 24px 28px;
+  background: transparent;
+  transition: background 0.5s var(--ease);
+}
+
+.thumb:hover .overlay {
   background: linear-gradient(
     to top,
-    rgba(0,0,0,0.75) 0%,
-    rgba(0,0,0,0.1) 55%,
+    rgba(0,0,0,0.82) 0%,
+    rgba(0,0,0,0.15) 55%,
     transparent 100%
   );
+}
+
+.text-h1,
+.text-p {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.thumb:hover .text-h1,
+.thumb:hover .text-p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.thumb:hover .text-p {
+  transition-delay: 0.04s;
 }
 
 .text-h1 {

@@ -78,6 +78,7 @@
 
     <div class="year-filter">
         <div class="year-track">
+            <div class="year-range-highlight"></div>
             <button type="button" class="year-tick" data-year="2011"><div class="year-dot"></div><span class="year-label">2011</span></button>
             <button type="button" class="year-tick" data-year="2012"><div class="year-dot"></div><span class="year-label">2012</span></button>
             <button type="button" class="year-tick" data-year="2013"><div class="year-dot"></div><span class="year-label">2013</span></button>
@@ -279,66 +280,168 @@
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll(); // run once on load
 
-        // ── Filters (industry/type multi-select + year timeline) ────────
+        // ── Filters ────────────────────────────────────────────────────
+        var YEARS       = ['2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023'];
         var activeFilters = new Set();
-        var activeYears   = new Set();
-        var filterBtns    = document.querySelectorAll('.filter-btn');
-        var yearTicks     = document.querySelectorAll('.year-tick');
-        var gridItems     = document.querySelectorAll('.thumb.grid-item');
+        var yearRange   = { start: null, end: null };
+
+        var filterBtns  = document.querySelectorAll('.filter-btn');
+        var yearTicks   = document.querySelectorAll('.year-tick');
+        var gridItems   = document.querySelectorAll('.thumb.grid-item');
+        var yearTrack   = document.querySelector('.year-track');
+        var yearRangeHL = document.querySelector('.year-range-highlight');
+
+        // Inject count spans into filter buttons
+        filterBtns.forEach(function(btn) {
+            if (btn.dataset.filter !== 'all') {
+                btn.appendChild(Object.assign(document.createElement('span'), { className: 'count' }));
+            }
+        });
+
+        function tagsMatch(tags) {
+            return activeFilters.size === 0 || tags.some(function(t) { return activeFilters.has(t); });
+        }
+
+        function yearInRange(year) {
+            if (!yearRange.start) return true;
+            var y = parseInt(year), s = parseInt(yearRange.start), e = parseInt(yearRange.end);
+            return y >= s && y <= e;
+        }
 
         function applyFilters() {
             gridItems.forEach(function(item) {
                 var tags = (item.dataset.tags || '').split(',').map(function(t) { return t.trim(); });
                 var year = (item.dataset.year || '').trim();
-
-                var tagMatch  = activeFilters.size === 0 || tags.some(function(t) { return activeFilters.has(t); });
-                var yearMatch = activeYears.size  === 0 || activeYears.has(year);
-
-                item.classList.toggle('hidden', !(tagMatch && yearMatch));
+                item.classList.toggle('hidden', !(tagsMatch(tags) && yearInRange(year)));
             });
             requestAnimationFrame(function() { msnry.layout(); });
+            updateCounts();
         }
 
+        function updateCounts() {
+            filterBtns.forEach(function(btn) {
+                var el = btn.querySelector('.count');
+                if (!el) return;
+                var n = 0;
+                gridItems.forEach(function(item) {
+                    var tags = (item.dataset.tags || '').split(',').map(function(t) { return t.trim(); });
+                    var year = (item.dataset.year || '').trim();
+                    if (tags.indexOf(btn.dataset.filter) !== -1 && yearInRange(year)) n++;
+                });
+                el.textContent = n > 0 ? n : '';
+            });
+        }
+
+        function updateRangeHL() {
+            if (!yearRange.start) { yearRangeHL.style.display = 'none'; return; }
+            var si = YEARS.indexOf(yearRange.start), ei = YEARS.indexOf(yearRange.end);
+            if (si > ei) { var t = si; si = ei; ei = t; }
+            var n = YEARS.length;
+            yearRangeHL.style.display = '';
+            yearRangeHL.style.left  = ((si + 0.5) / n * 100) + '%';
+            yearRangeHL.style.right = ((n - ei - 0.5) / n * 100) + '%';
+        }
+
+        function updateTickStyles() {
+            var si = yearRange.start ? YEARS.indexOf(yearRange.start) : -1;
+            var ei = yearRange.end   ? YEARS.indexOf(yearRange.end)   : -1;
+            if (si > ei) { var t = si; si = ei; ei = t; }
+            yearTicks.forEach(function(tick, i) {
+                var inRange = si >= 0 && i >= si && i <= ei;
+                tick.classList.toggle('active',   i === si || i === ei);
+                tick.classList.toggle('in-range', inRange && i !== si && i !== ei);
+            });
+        }
+
+        function autoRangeFromFilter() {
+            if (activeFilters.size === 0) {
+                yearRange.start = yearRange.end = null;
+            } else {
+                var ys = [];
+                gridItems.forEach(function(item) {
+                    var tags = (item.dataset.tags || '').split(',').map(function(t) { return t.trim(); });
+                    if (tagsMatch(tags)) ys.push(parseInt(item.dataset.year));
+                });
+                if (ys.length) {
+                    yearRange.start = String(Math.min.apply(null, ys));
+                    yearRange.end   = String(Math.max.apply(null, ys));
+                }
+            }
+            updateRangeHL();
+            updateTickStyles();
+        }
+
+        // ── Category buttons ───────────────────────────────────────────
         filterBtns.forEach(function(btn) {
             btn.addEventListener('click', function() {
                 var filter = btn.dataset.filter;
-
                 if (filter === 'all') {
                     activeFilters.clear();
                     filterBtns.forEach(function(b) { b.classList.remove('active'); });
                     btn.classList.add('active');
                 } else {
                     document.querySelector('[data-filter="all"]').classList.remove('active');
-
                     if (activeFilters.has(filter)) {
                         activeFilters.delete(filter);
                         btn.classList.remove('active');
-                        if (activeFilters.size === 0) {
-                            document.querySelector('[data-filter="all"]').classList.add('active');
-                        }
+                        if (activeFilters.size === 0) document.querySelector('[data-filter="all"]').classList.add('active');
                     } else {
                         activeFilters.add(filter);
                         btn.classList.add('active');
                     }
                 }
-
+                autoRangeFromFilter();
                 applyFilters();
             });
         });
 
-        yearTicks.forEach(function(tick) {
-            tick.addEventListener('click', function() {
-                var year = tick.dataset.year;
-                if (activeYears.has(year)) {
-                    activeYears.delete(year);
-                    tick.classList.remove('active');
-                } else {
-                    activeYears.add(year);
-                    tick.classList.add('active');
-                }
-                applyFilters();
-            });
-        });
+        // ── Year timeline drag ─────────────────────────────────────────
+        var isDragging = false, dragStartYear = null, prevRange = null;
+
+        function yearFromX(clientX) {
+            var rect = yearTrack.getBoundingClientRect();
+            var idx  = Math.round(Math.max(0, Math.min(1, (clientX - rect.left) / rect.width)) * (YEARS.length - 1));
+            return YEARS[idx];
+        }
+
+        function dragStart(clientX) {
+            isDragging    = true;
+            prevRange     = { start: yearRange.start, end: yearRange.end };
+            dragStartYear = yearFromX(clientX);
+            yearRange.start = yearRange.end = dragStartYear;
+            updateRangeHL(); updateTickStyles(); applyFilters();
+        }
+
+        function dragMove(clientX) {
+            if (!isDragging) return;
+            var cur = yearFromX(clientX);
+            var a = parseInt(dragStartYear), b = parseInt(cur);
+            yearRange.start = String(Math.min(a, b));
+            yearRange.end   = String(Math.max(a, b));
+            updateRangeHL(); updateTickStyles(); applyFilters();
+        }
+
+        function dragEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            // Toggle off single-year if same as previous
+            if (yearRange.start === yearRange.end &&
+                prevRange && prevRange.start === yearRange.start && prevRange.end === yearRange.end) {
+                yearRange.start = yearRange.end = null;
+                updateRangeHL(); updateTickStyles(); applyFilters();
+            }
+        }
+
+        yearTrack.addEventListener('mousedown', function(e) { dragStart(e.clientX); e.preventDefault(); });
+        document.addEventListener('mousemove',  function(e) { dragMove(e.clientX); });
+        document.addEventListener('mouseup',    dragEnd);
+
+        yearTrack.addEventListener('touchstart', function(e) { dragStart(e.touches[0].clientX); e.preventDefault(); }, { passive: false });
+        document.addEventListener('touchmove',   function(e) { if (isDragging) { dragMove(e.touches[0].clientX); e.preventDefault(); } }, { passive: false });
+        document.addEventListener('touchend',    dragEnd);
+
+        // Initial counts
+        updateCounts();
     </script>
 </body>
 </html>
