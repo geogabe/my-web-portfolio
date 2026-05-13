@@ -59,21 +59,31 @@
 
     <div class="filter-bar">
         <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="it-support">IT Support</button>
-        <button class="filter-btn" data-filter="it-security">IT Security</button>
-        <button class="filter-btn" data-filter="analytics">Analytics</button>
-        <button class="filter-btn" data-filter="trading">Trading</button>
-        <button class="filter-btn" data-filter="finops">Finops</button>
-        <button class="filter-btn" data-filter="logistics">Logistics</button>
-        <button class="filter-btn" data-filter="project-management">Project Mgmt</button>
-        <button class="filter-btn" data-filter="automotive">Automotive</button>
-        <button class="filter-btn" data-filter="food">Food</button>
-        <button class="filter-btn" data-filter="entertainment">Entertainment</button>
+        <div class="filter-group">
+            <span class="filter-group-label">Industries</span>
+            <div class="filter-group-btns">
+                <button class="filter-btn" data-filter="it-support">IT Support</button>
+                <button class="filter-btn" data-filter="it-security">IT Security</button>
+                <button class="filter-btn" data-filter="analytics">Analytics</button>
+                <button class="filter-btn" data-filter="trading">Trading</button>
+                <button class="filter-btn" data-filter="finops">Finops</button>
+                <button class="filter-btn" data-filter="logistics">Logistics</button>
+                <button class="filter-btn" data-filter="project-management">Project Mgmt</button>
+                <button class="filter-btn" data-filter="automotive">Automotive</button>
+                <button class="filter-btn" data-filter="food">Food</button>
+                <button class="filter-btn" data-filter="entertainment">Entertainment</button>
+            </div>
+        </div>
         <span class="filter-sep"></span>
-        <button class="filter-btn" data-filter="product">Product</button>
-        <button class="filter-btn" data-filter="poc">POC</button>
-        <button class="filter-btn" data-filter="vision">Vision</button>
-        <button class="filter-btn" data-filter="ecosystem">Ecosystem</button>
+        <div class="filter-group">
+            <span class="filter-group-label">Project type</span>
+            <div class="filter-group-btns">
+                <button class="filter-btn" data-filter="product">Product</button>
+                <button class="filter-btn" data-filter="poc">POC</button>
+                <button class="filter-btn" data-filter="vision">Vision</button>
+                <button class="filter-btn" data-filter="ecosystem">Ecosystem</button>
+            </div>
+        </div>
     </div>
 
     <div class="year-filter">
@@ -225,23 +235,6 @@
                 </div>
             </div>
 
-            <div class="thumb grid-item" data-tags="food,product" data-year="2012">
-                <img src="images/thumbs/gbc.png" alt="Great British Chefs thumbnail">
-                <div class="overlay">
-                    <p class="text-h1">Food</p>
-                    <p class="text-p">Great British Chefs — Windows 8 App</p>
-                    <a class="link-a" href="pages/gbc.html">→ Case study</a>
-                </div>
-            </div>
-
-            <div class="thumb grid-item" data-tags="entertainment,product" data-year="2011">
-                <img src="images/thumbs/wwe.png" alt="WWE My Universe thumbnail">
-                <div class="overlay">
-                    <p class="text-h1">Entertainment</p>
-                    <p class="text-p">WWE My Universe — Windows 8 App</p>
-                    <a class="link-a" href="pages/wwe.html">→ Case study</a>
-                </div>
-            </div>
         </div>
     </main>
 
@@ -316,6 +309,25 @@
             });
             requestAnimationFrame(function() { msnry.layout(); });
             updateCounts();
+            updateTagHighlights();
+        }
+
+        function updateTagHighlights() {
+            filterBtns.forEach(function(btn) {
+                var filter = btn.dataset.filter;
+                if (filter === 'all' || btn.classList.contains('active')) {
+                    btn.classList.remove('in-range');
+                    return;
+                }
+                var hasMatch = false;
+                if (yearRange.start) {
+                    gridItems.forEach(function(item) {
+                        var tags = (item.dataset.tags || '').split(',').map(function(t) { return t.trim(); });
+                        if (tags.indexOf(filter) !== -1 && yearInRange(item.dataset.year)) hasMatch = true;
+                    });
+                }
+                btn.classList.toggle('in-range', hasMatch);
+            });
         }
 
         function updateCounts() {
@@ -337,7 +349,7 @@
             var si = YEARS.indexOf(yearRange.start), ei = YEARS.indexOf(yearRange.end);
             if (si > ei) { var t = si; si = ei; ei = t; }
             var n = YEARS.length;
-            yearRangeHL.style.display = '';
+            yearRangeHL.style.display = 'block';
             yearRangeHL.style.left  = ((si + 0.5) / n * 100) + '%';
             yearRangeHL.style.right = ((n - ei - 0.5) / n * 100) + '%';
         }

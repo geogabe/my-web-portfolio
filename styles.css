@@ -267,9 +267,32 @@ main {
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   gap: 8px;
   padding: 20px var(--gutter) 4px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-group-label {
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.5;
+  padding-left: 2px;
+}
+
+.filter-group-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .filter-sep {
@@ -322,6 +345,7 @@ main {
   grid-template-columns: repeat(13, 1fr);
   position: relative;
   min-width: 600px;
+  cursor: crosshair;
 }
 
 .year-track::before {
@@ -399,13 +423,20 @@ main {
 .year-range-highlight {
   display: none;
   position: absolute;
-  top: 0;
-  height: 7px;
-  background: rgba(159, 201, 207, 0.18);
-  border-radius: 4px;
+  top: -9px;
+  height: 25px;
+  background: rgba(159, 201, 207, 0.12);
+  border: 1.5px solid var(--accent);
+  border-radius: 3px;
   pointer-events: none;
-  transition: left 0.15s var(--ease), right 0.15s var(--ease);
+  transition: left 0.08s ease-out, right 0.08s ease-out;
   z-index: 0;
+  box-shadow: 0 0 8px rgba(159, 201, 207, 0.15);
+}
+
+.filter-btn.in-range {
+  color: var(--accent);
+  border-color: rgba(159, 201, 207, 0.4);
 }
 
 .filter-btn .count {
